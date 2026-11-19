@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1176 1024" width="1176" height="1024">
+  <defs>
+    <style>
+      .moo-smile-bounce {
+        transform-origin: 588px 600px;
+        animation: moo-happy-bounce 2s ease-in-out infinite;
+      }
+      .moo-eye-smile-l {
+        transform-origin: 387px 370px;
+        animation: moo-smile-wink-l 2s ease-in-out infinite;
+      }
+      .moo-eye-smile-r {
+        transform-origin: 790px 380px;
+        animation: moo-smile-wink-r 2s ease-in-out infinite;
+      }
+      .moo-blush {
+        animation: moo-blush-glow 2s ease-in-out infinite;
+      }
+
+      @keyframes moo-happy-bounce {
+        0%, 100% { transform: translateY(0); }
+        40% { transform: translateY(-22px) scale(1.02); }
+        60% { transform: translateY(-8px); }
+      }
+
+      @keyframes moo-smile-wink-l {
+        0%, 100% { transform: scaleY(1); }
+        45% { transform: scaleY(0.85); }
+      }
+
+      @keyframes moo-smile-wink-r {
+        0%, 100% { transform: scaleY(1); }
+        45% { transform: scaleY(0.85); }
+      }
+
+      @keyframes moo-blush-glow {
+        0%, 100% { opacity: 0.55; }
+        40% { opacity: 0.9; }
+      }
+    </style>
+  </defs>
+
+  <g class="moo-smile-bounce">
+    <!-- Silueta blanca -->
+    <rect x="76" y="0" width="1024" height="560" rx="192" fill="#FFFFFF" />
+    <rect x="0" y="464" width="1176" height="560" rx="192" fill="#FFFFFF" />
+
+    <!-- Ojos cuadrados/rectangulares sonrientes (elevados e inclinados sutilmente) -->
+    <!-- Ojo izquierdo rectangular sonriente -->
+    <rect class="moo-eye-smile-l" x="274" y="320" width="226" height="130" rx="42" fill="#070708" transform="rotate(-6 387 385)" />
+
+    <!-- Ojo derecho rectangular sonriente -->
+    <rect class="moo-eye-smile-r" x="678" y="330" width="224" height="120" rx="42" fill="#070708" transform="rotate(6 790 390)" />
+
+    <!-- Sonrisita pícara sutil (rectángulo curvado suave) -->
+    <path d="M 508 510 Q 588 590 668 510" stroke="#070708" stroke-width="38" stroke-linecap="round" fill="none" />
+
+    <!-- Rubor en mejillas animado -->
+    <ellipse class="moo-blush" cx="230" cy="480" rx="76" ry="42" fill="#FF8BA7" />
+    <ellipse class="moo-blush" cx="946" cy="480" rx="76" ry="42" fill="#FF8BA7" />
+  </g>
+</svg>

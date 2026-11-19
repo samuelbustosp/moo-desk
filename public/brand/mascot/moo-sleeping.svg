@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1176 1024" width="1176" height="1024">
+  <defs>
+    <style>
+      .moo-sleep-body {
+        transform-origin: 588px 600px;
+        animation: moo-sleep-breathe 4.5s ease-in-out infinite;
+      }
+      .moo-zzz-1 {
+        transform-origin: 960px 240px;
+        animation: moo-float-z 3.6s ease-in-out infinite;
+      }
+      .moo-zzz-2 {
+        transform-origin: 1040px 160px;
+        animation: moo-float-z 3.6s ease-in-out 1.2s infinite;
+      }
+      .moo-zzz-3 {
+        transform-origin: 1110px 70px;
+        animation: moo-float-z 3.6s ease-in-out 2.4s infinite;
+      }
+
+      @keyframes moo-sleep-breathe {
+        0%, 100% { transform: translateY(0) scale(1); }
+        50% { transform: translateY(-16px) scale(1.01); }
+      }
+
+      @keyframes moo-float-z {
+        0% { transform: translate(0, 0) scale(0.6); opacity: 0; }
+        30% { opacity: 0.9; }
+        80% { opacity: 0.8; }
+        100% { transform: translate(30px, -60px) scale(1.1); opacity: 0; }
+      }
+    </style>
+  </defs>
+
+  <g class="moo-sleep-body">
+    <!-- Silueta blanca -->
+    <rect x="76" y="0" width="1024" height="560" rx="192" fill="#FFFFFF" />
+    <rect x="0" y="464" width="1176" height="560" rx="192" fill="#FFFFFF" />
+
+    <!-- Ojos rectangulares cerrados durmiendo plácidamente -->
+    <rect x="274" y="380" width="226" height="28" rx="14" fill="#070708" />
+    <rect x="678" y="380" width="224" height="28" rx="14" fill="#070708" />
+
+    <!-- Boquita relajada respirando (rectángulo redondeado sutil) -->
+    <rect x="560" y="530" width="56" height="24" rx="12" fill="#070708" />
+  </g>
+
+  <!-- Letras Zzz flotantes animadas -->
+  <g fill="#93C5FD" font-family="system-ui, -apple-system, sans-serif" font-weight="900">
+    <text class="moo-zzz-1" x="960" y="240" font-size="70">z</text>
+    <text class="moo-zzz-2" x="1040" y="160" font-size="95">Z</text>
+    <text class="moo-zzz-3" x="1110" y="70" font-size="130">Z</text>
+  </g>
+</svg>

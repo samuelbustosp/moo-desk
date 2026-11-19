@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1176 1024" width="1176" height="1024">
+  <defs>
+    <style>
+      .moo-listen-body {
+        transform-origin: 588px 600px;
+        animation: moo-listen-beat 1.6s ease-in-out infinite;
+      }
+      .moo-eyes-listen {
+        transform-origin: 588px 380px;
+        animation: moo-eyes-pulse 1.6s ease-in-out infinite;
+      }
+      .sound-wave-left {
+        transform-origin: 0px 390px;
+        animation: moo-wave-pulse 1.2s ease-out infinite;
+      }
+      .sound-wave-right {
+        transform-origin: 1176px 390px;
+        animation: moo-wave-pulse 1.2s ease-out 0.2s infinite;
+      }
+
+      @keyframes moo-listen-beat {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        25% { transform: translateY(-12px) rotate(-1.5deg); }
+        75% { transform: translateY(-4px) rotate(1.5deg); }
+      }
+
+      @keyframes moo-eyes-pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+      }
+
+      @keyframes moo-wave-pulse {
+        0% { transform: scale(0.7); opacity: 0.1; }
+        50% { opacity: 0.95; }
+        100% { transform: scale(1.35); opacity: 0; }
+      }
+    </style>
+  </defs>
+
+  <g class="moo-listen-body">
+    <!-- Diadema de los auriculares sobre la cabeza -->
+    <path d="M 120 400 C 120 70, 1056 70, 1056 400" fill="none" stroke="#60A5FA" stroke-width="56" stroke-linecap="round" />
+
+    <!-- Silueta blanca de la mascota -->
+    <rect x="76" y="0" width="1024" height="560" rx="192" fill="#FFFFFF" />
+    <rect x="0" y="464" width="1176" height="560" rx="192" fill="#FFFFFF" />
+
+    <!-- Ojos estrictamente cuadrados/rectangulares atentos latiendo al compás -->
+    <g class="moo-eyes-listen">
+      <!-- Ojo izquierdo cuadrado atento -->
+      <rect x="274" y="270" width="226" height="236" rx="52" fill="#070708" />
+      <!-- Ojo derecho cuadrado atento -->
+      <rect x="678" y="276" width="224" height="230" rx="52" fill="#070708" />
+      <!-- Boquita relajada / atenta (pequeño rectángulo redondeado) -->
+      <rect x="538" y="530" width="100" height="24" rx="12" fill="#070708" />
+    </g>
+
+    <!-- Copas de los auriculares en los laterales -->
+    <rect x="24" y="280" width="96" height="220" rx="48" fill="#3B82F6" />
+    <rect x="52" y="320" width="40" height="140" rx="20" fill="#93C5FD" />
+
+    <rect x="1056" y="280" width="96" height="220" rx="48" fill="#3B82F6" />
+    <rect x="1084" y="320" width="40" height="140" rx="20" fill="#93C5FD" />
+  </g>
+
+  <!-- Onditas de sonido animadas expandiéndose hacia afuera -->
+  <g class="sound-wave-left">
+    <path d="M 0 320 A 70 70 0 0 0 0 460" fill="none" stroke="#60A5FA" stroke-width="22" stroke-linecap="round" />
+  </g>
+  <g class="sound-wave-right">
+    <path d="M 1176 320 A 70 70 0 0 1 1176 460" fill="none" stroke="#60A5FA" stroke-width="22" stroke-linecap="round" />
+  </g>
+</svg>

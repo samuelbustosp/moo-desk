@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1176 1024" width="1176" height="1024">
+  <defs>
+    <style>
+      .moo-cool-body {
+        transform-origin: 588px 600px;
+        animation: moo-cool-hover 3s ease-in-out infinite;
+      }
+      .cyber-glint {
+        animation: moo-glint-sweep 2.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+
+      @keyframes moo-cool-hover {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-14px); }
+      }
+
+      @keyframes moo-glint-sweep {
+        0% { transform: translateX(-160px); opacity: 0; }
+        20% { opacity: 0.95; }
+        80% { opacity: 0.95; }
+        100% { transform: translateX(200px); opacity: 0; }
+      }
+    </style>
+    <!-- Recorte para los cristales de las gafas -->
+    <clipPath id="glasses-frame-clip">
+      <rect x="250" y="300" width="280" height="170" rx="44" />
+      <rect x="646" y="300" width="280" height="170" rx="44" />
+    </clipPath>
+  </defs>
+
+  <g class="moo-cool-body">
+    <!-- Silueta blanca -->
+    <rect x="76" y="0" width="1024" height="560" rx="192" fill="#FFFFFF" />
+    <rect x="0" y="464" width="1176" height="560" rx="192" fill="#FFFFFF" />
+
+    <!-- Sonrisa confiada y canchera -->
+    <path d="M 520 540 Q 610 600 680 520" stroke="#070708" stroke-width="40" stroke-linecap="round" fill="none" />
+
+    <!-- Armazón de las gafas de sol (cuadradas/geométricas) -->
+    <g fill="#070708">
+      <rect x="250" y="300" width="280" height="170" rx="44" />
+      <rect x="646" y="300" width="280" height="170" rx="44" />
+      <rect x="520" y="340" width="136" height="36" rx="18" />
+      <rect x="150" y="350" width="110" height="24" rx="12" />
+      <rect x="916" y="350" width="110" height="24" rx="12" />
+    </g>
+
+    <!-- Reflejos cian de barrido futurista en los cristales -->
+    <g clip-path="url(#glasses-frame-clip)">
+      <g class="cyber-glint">
+        <polygon points="340,280 430,280 320,500 230,500" fill="#38BDF8" opacity="0.6" />
+        <polygon points="460,280 500,280 390,500 350,500" fill="#BAE6FD" opacity="0.8" />
+        <polygon points="736,280 826,280 716,500 626,500" fill="#38BDF8" opacity="0.6" />
+        <polygon points="856,280 896,280 786,500 746,500" fill="#BAE6FD" opacity="0.8" />
+      </g>
+    </g>
+  </g>
+</svg>

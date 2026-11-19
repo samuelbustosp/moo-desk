@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1176 1024" width="1176" height="1024">
+  <defs>
+    <style>
+      .moo-wink-body {
+        transform-origin: 588px 600px;
+        animation: moo-wink-tilt 2.8s ease-in-out infinite;
+      }
+      .moo-eye-wink-l {
+        transform-origin: 387px 399px;
+        animation: moo-do-wink 2.8s ease-in-out infinite;
+      }
+      .moo-sparkle {
+        transform-origin: 240px 360px;
+        animation: moo-sparkle-shine 2.8s ease-in-out infinite;
+      }
+
+      @keyframes moo-wink-tilt {
+        0%, 100% { transform: rotate(0deg); }
+        30%, 60% { transform: rotate(-2.5deg) translateY(-8px); }
+      }
+
+      @keyframes moo-do-wink {
+        0%, 20%, 75%, 100% {
+          transform: scaleY(1);
+        }
+        30%, 65% {
+          transform: scaleY(0.12); /* Se achata a una línea horizontal delgada */
+        }
+      }
+
+      @keyframes moo-sparkle-shine {
+        0%, 25%, 70%, 100% {
+          transform: scale(0) rotate(0deg);
+          opacity: 0;
+        }
+        35%, 60% {
+          transform: scale(1.3) rotate(45deg);
+          opacity: 1;
+        }
+      }
+    </style>
+  </defs>
+
+  <g class="moo-wink-body">
+    <!-- Silueta blanca -->
+    <rect x="76" y="0" width="1024" height="560" rx="192" fill="#FFFFFF" />
+    <rect x="0" y="464" width="1176" height="560" rx="192" fill="#FFFFFF" />
+
+    <!-- Ojo izquierdo cuadrado que se guiña -->
+    <rect class="moo-eye-wink-l" x="274" y="286" width="226" height="226" rx="44" fill="#070708" />
+
+    <!-- Ojo derecho rectangular bien abierto -->
+    <rect x="678" y="310" width="224" height="206" rx="44" fill="#070708" />
+
+    <!-- Sonrisita ladeada y pícara -->
+    <path d="M 530 540 Q 610 610 690 520" stroke="#070708" stroke-width="40" stroke-linecap="round" fill="none" />
+
+    <!-- Rubor suave -->
+    <ellipse cx="230" cy="480" rx="64" ry="36" fill="#FDA4AF" opacity="0.65" />
+    <ellipse cx="946" cy="480" rx="64" ry="36" fill="#FDA4AF" opacity="0.65" />
+  </g>
+
+  <!-- Destello / Estrella dorada en el guiño -->
+  <g class="moo-sparkle" fill="#FBBF24">
+    <polygon points="240,320 248,348 276,356 248,364 240,392 232,364 204,356 232,348" />
+  </g>
+</svg>

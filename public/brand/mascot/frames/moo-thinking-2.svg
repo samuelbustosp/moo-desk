@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1176 1024" width="1176" height="1024">
+  <!-- Frame 2: Mirando arriba a la derecha -->
+  <g transform="rotate(-2 588 512)">
+    <rect x="76" y="0" width="1024" height="560" rx="192" fill="#FFFFFF" />
+    <rect x="0" y="464" width="1176" height="560" rx="192" fill="#FFFFFF" />
+    <rect x="310" y="170" width="160" height="34" rx="17" fill="#070708" transform="rotate(-10 390 187)" />
+    <rect x="310" y="246" width="216" height="216" rx="44" fill="#070708" />
+    <rect x="716" y="286" width="206" height="136" rx="38" fill="#070708" />
+    <rect x="528" y="530" width="120" height="26" rx="13" fill="#070708" />
+  </g>
+  <circle cx="980" cy="190" r="32" fill="#A78BFA" opacity="0.8" />
+  <circle cx="1060" cy="120" r="48" fill="#A78BFA" opacity="0.85" />
+</svg>

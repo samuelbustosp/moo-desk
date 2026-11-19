@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moo Mascot — SVGs Animados con Ojos Cuadrados</title>
+  <style>
+    :root {
+      --bg: #0B0F19;
+      --card-bg: #131B2E;
+      --card-border: #1E293B;
+      --text: #F8FAFC;
+      --text-muted: #94A3B8;
+      --accent: #38BDF8;
+      --accent-glow: rgba(56, 189, 248, 0.2);
+    }
+    .light-mode {
+      --bg: #F1F5F9;
+      --card-bg: #FFFFFF;
+      --card-border: #E2E8F0;
+      --text: #0F172A;
+      --text-muted: #64748B;
+      --accent: #0284C7;
+      --accent-glow: rgba(2, 132, 199, 0.15);
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2.5rem 1.5rem;
+      transition: background-color 0.25s, color 0.25s;
+    }
+    header {
+      max-width: 1200px;
+      margin: 0 auto 3rem auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: var(--accent-glow);
+      color: var(--accent);
+      width: fit-content;
+      border: 1px solid var(--accent);
+    }
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+    p.lead {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 720px;
+      line-height: 1.6;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    button {
+      padding: 0.6rem 1.1rem;
+      border-radius: 0.6rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
+      color: var(--text);
+      transition: all 0.2s;
+    }
+    button:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+    .section-title {
+      max-width: 1200px;
+      margin: 3rem auto 1.5rem auto;
+      font-size: 1.5rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.75rem;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 1.25rem;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      position: relative;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px -8px rgba(0,0,0,0.3);
+      border-color: var(--accent);
+    }
+    .preview-box {
+      width: 100%;
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 1rem;
+      margin-bottom: 1.25rem;
+      padding: 1rem;
+      border: 1px dashed var(--card-border);
+      position: relative;
+      overflow: hidden;
+    }
+    .light-mode .preview-box {
+      background: #0F172A; /* Fondo oscuro para que resalte la mascota blanca */
+    }
+    .preview-box img {
+      max-width: 85%;
+      max-height: 85%;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 16px rgba(0,0,0,0.25));
+    }
+    .anim-pill {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid #10B981;
+      color: #34D399;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.2rem 0.5rem;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .anim-pill::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10B981;
+      box-shadow: 0 0 8px #10B981;
+    }
+    .info {
+      width: 100%;
+      text-align: left;
+    }
+    .info h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .tag {
+      font-size: 0.72rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 0.35rem;
+      background: var(--accent-glow);
+      color: var(--accent);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .info p {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      line-height: 1.5;
+      margin-bottom: 1.25rem;
+      min-height: 42px;
+    }
+    .actions {
+      display: flex;
+      gap: 0.6rem;
+      width: 100%;
+    }
+    .actions button {
+      flex: 1;
+      font-size: 0.82rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #10B981;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.6rem;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s;
+      pointer-events: none;
+      z-index: 999;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <span class="badge">✨ Mascota Oficial de Moo</span>
+    <h1>Variantes Animadas con Ojos Cuadrados</h1>
+    <p class="lead">
+      Mascotas con ojos estrictamente cuadrados y rectangulares fieles al diseño original, animadas internamente mediante CSS en loop continuo autónomo.
+    </p>
+
+    <div class="controls">
+      <button onclick="toggleTheme()">🌓 Alternar Tema Claro / Oscuro</button>
+      <button onclick="downloadAll()">📦 Descargar Todos los SVGs</button>
+    </div>
+  </header>
+
+  <h2 class="section-title">🎬 Animaciones Continuas (SVGs Vivos)</h2>
+  <main class="grid" id="grid"></main>
+
+  <h2 class="section-title">🎞️ Frames Individuales por Secuencia</h2>
+  <div class="grid" id="frames-grid"></div>
+
+  <div id="toast" class="toast">¡Código SVG copiado al portapapeles!</div>
+
+  <script>
+    const animatedVariants = [
+      {
+        id: "moo-idle",
+        name: "Reposo (Original)",
+        tag: "Parpadeo",
+        desc: "Ojos cuadrados originales parpadeando naturalmente y respiración sutil.",
+        file: "moo-idle.svg"
+      },
+      {
+        id: "moo-thinking",
+        name: "Pensando / Evaluando",
+        tag: "Ideas",
+        desc: "Ojos cuadrados buscando ideas, ceja rectangular que sube y burbujas latiendo.",
+        file: "moo-thinking.svg"
+      },
+      {
+        id: "moo-listening",
+        name: "Escuchando (Audio)",
+        tag: "Ondas Beat",
+        desc: "Ojos cuadrados latiendo al compás, auriculares celestes y ondas de sonido vivas.",
+        file: "moo-listening.svg"
+      },
+      {
+        id: "moo-smile",
+        name: "Sonrisita / Feliz",
+        tag: "Rebote",
+        desc: "Ojos rectangulares elevados y sonrientes, rebote alegre y mejillas rosadas.",
+        file: "moo-smile.svg"
+      },
+      {
+        id: "moo-in-love",
+        name: "Enamorado / Amor",
+        tag: "Heartbeat",
+        desc: "Ojos de corazón con latido rítmico, corazones flotantes y balanceo dulce.",
+        file: "moo-in-love.svg"
+      },
+      {
+        id: "moo-wink",
+        name: "Guiño Cómplice",
+        tag: "Destello",
+        desc: "Ojo izquierdo que guiña rítmicamente con destello dorado brillante.",
+        file: "moo-wink.svg"
+      },
+      {
+        id: "moo-sleeping",
+        name: "Durmiendo / Zen",
+        tag: "Respiración",
+        desc: "Ojos rectangulares cerrados, respiración profunda y Zzz ascendentes.",
+        file: "moo-sleeping.svg"
+      },
+      {
+        id: "moo-surprised",
+        name: "Sorprendido / Wow",
+        tag: "Sobresalto",
+        desc: "Ojos cuadrados gigantes, boca en 'O', sobresalto elástico y rayos de asombro.",
+        file: "moo-surprised.svg"
+      },
+      {
+        id: "moo-cool",
+        name: "Modo Cyber / Gafas",
+        tag: "Barrido Luz",
+        desc: "Gafas de sol rectangulares con barrido de luz cian futurista continuo.",
+        file: "moo-cool.svg"
+      }
+    ];
+
+    const frameVariants = [
+      { name: "Thinking — Frame 1", desc: "Inicio de reflexión", file: "frames/moo-thinking-1.svg" },
+      { name: "Thinking — Frame 2", desc: "Mirando arriba a la derecha", file: "frames/moo-thinking-2.svg" },
+      { name: "Thinking — Frame 3", desc: "Ideas conectadas con 3 burbujas", file: "frames/moo-thinking-3.svg" },
+      { name: "Wink — Frame 1", desc: "Ojos abiertos", file: "frames/moo-wink-1.svg" },
+      { name: "Wink — Frame 2", desc: "Medio guiño en transición", file: "frames/moo-wink-2.svg" },
+      { name: "Wink — Frame 3", desc: "Guiño cerrado con destello", file: "frames/moo-wink-3.svg" }
+    ];
+
+    const grid = document.getElementById("grid");
+    animatedVariants.forEach(v => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <div class="preview-box">
+          <span class="anim-pill">En vivo</span>
+          <img src="${v.file}?t=${Date.now()}" alt="Moo ${v.name}">
+        </div>
+        <div class="info">
+          <h3>${v.name} <span class="tag">${v.tag}</span></h3>
+          <p>${v.desc}</p>
+        </div>
+        <div class="actions">
+          <button onclick="copySvg('${v.file}')">📋 Copiar SVG</button>
+          <button onclick="downloadFile('${v.file}')">⬇️ Descargar</button>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+
+    const framesGrid = document.getElementById("frames-grid");
+    frameVariants.forEach(v => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <div class="preview-box">
+          <img src="${v.file}?t=${Date.now()}" alt="${v.name}">
+        </div>
+        <div class="info">
+          <h3>${v.name}</h3>
+          <p>${v.desc}</p>
+        </div>
+        <div class="actions">
+          <button onclick="copySvg('${v.file}')">📋 Copiar</button>
+          <button onclick="downloadFile('${v.file}')">⬇️ Descargar</button>
+        </div>
+      `;
+      framesGrid.appendChild(card);
+    });
+
+    function toggleTheme() {
+      document.body.classList.toggle("light-mode");
+    }
+
+    async function copySvg(file) {
+      try {
+        const res = await fetch(file);
+        const text = await res.text();
+        await navigator.clipboard.writeText(text);
+        showToast("¡Código SVG copiado al portapapeles!");
+      } catch (e) {
+        showToast("Error al copiar SVG");
+      }
+    }
+
+    function downloadFile(file) {
+      const a = document.createElement("a");
+      a.href = file;
+      a.download = file.split("/").pop();
+      a.click();
+    }
+
+    async function downloadAll() {
+      for (const v of animatedVariants) {
+        downloadFile(v.file);
+        await new Promise(r => setTimeout(r, 180));
+      }
+      showToast("Descargando SVGs animados...");
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      toast.textContent = msg;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2500);
+    }
+  </script>
+</body>
+</html>

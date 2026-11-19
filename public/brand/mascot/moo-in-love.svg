@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1176 1024" width="1176" height="1024">
+  <defs>
+    <style>
+      .moo-love-body {
+        transform-origin: 588px 600px;
+        animation: moo-love-sway 3s ease-in-out infinite;
+      }
+      .moo-heart-eye-l {
+        transform-origin: 387px 390px;
+        animation: moo-heartbeat 1.4s ease-in-out infinite;
+      }
+      .moo-heart-eye-r {
+        transform-origin: 788px 405px;
+        animation: moo-heartbeat 1.4s ease-in-out 0.15s infinite;
+      }
+      .floating-heart-1 {
+        transform-origin: 1040px 180px;
+        animation: moo-float-heart 2.2s ease-out infinite;
+      }
+      .floating-heart-2 {
+        transform-origin: 160px 220px;
+        animation: moo-float-heart 2.2s ease-out 1.1s infinite;
+      }
+
+      @keyframes moo-love-sway {
+        0%, 100% { transform: rotate(0deg) translateY(0); }
+        30% { transform: rotate(-2.5deg) translateY(-8px); }
+        70% { transform: rotate(2.5deg) translateY(-8px); }
+      }
+
+      @keyframes moo-heartbeat {
+        0%, 100% { transform: scale(1); }
+        15% { transform: scale(1.2); }
+        30% { transform: scale(1.08); }
+        45% { transform: scale(1.25); }
+        60% { transform: scale(1); }
+      }
+
+      @keyframes moo-float-heart {
+        0% { transform: translateY(0) scale(0.6); opacity: 0; }
+        30% { opacity: 0.95; }
+        100% { transform: translateY(-80px) scale(1.1); opacity: 0; }
+      }
+    </style>
+  </defs>
+
+  <g class="moo-love-body">
+    <!-- Silueta blanca -->
+    <rect x="76" y="0" width="1024" height="560" rx="192" fill="#FFFFFF" />
+    <rect x="0" y="464" width="1176" height="560" rx="192" fill="#FFFFFF" />
+
+    <!-- Ojos de corazón animados con latido rítmico -->
+    <!-- Ojo izquierdo de corazón -->
+    <g class="moo-heart-eye-l">
+      <path d="M 387 490 
+               C 340 450, 270 380, 270 310 
+               A 65 65 0 0 1 387 290 
+               A 65 65 0 0 1 504 310 
+               C 504 380, 434 450, 387 490 Z" 
+            fill="#F43F5E" />
+    </g>
+
+    <!-- Ojo derecho de corazón -->
+    <g class="moo-heart-eye-r">
+      <path d="M 788 500 
+               C 745 460, 678 395, 678 330 
+               A 60 60 0 0 1 788 310 
+               A 60 60 0 0 1 898 330 
+               C 898 395, 831 460, 788 500 Z" 
+            fill="#F43F5E" />
+    </g>
+
+    <!-- Sonrisita dulce (rectángulo curvado suave) -->
+    <path d="M 520 540 Q 588 610 656 540" stroke="#070708" stroke-width="40" stroke-linecap="round" fill="none" />
+
+    <!-- Rubor en mejillas -->
+    <ellipse cx="230" cy="490" rx="76" ry="42" fill="#FB7185" opacity="0.75" />
+    <ellipse cx="946" cy="490" rx="76" ry="42" fill="#FB7185" opacity="0.75" />
+  </g>
+
+  <!-- Corazoncitos flotantes ascendentes -->
+  <g class="floating-heart-1" fill="#F43F5E">
+    <path d="M 1040 180 C 1010 150, 960 110, 960 70 A 35 35 0 0 1 1040 60 A 35 35 0 0 1 1120 70 C 1120 110, 1070 150, 1040 180 Z" transform="rotate(15 1040 120)" />
+  </g>
+  <g class="floating-heart-2" fill="#FB7185">
+    <path d="M 160 210 C 140 190, 100 160, 100 130 A 25 25 0 0 1 160 120 A 25 25 0 0 1 220 130 C 220 160, 180 190, 160 210 Z" transform="rotate(-15 160 165)" />
+  </g>
+</svg>

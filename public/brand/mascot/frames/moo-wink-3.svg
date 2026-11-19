@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1176 1024" width="1176" height="1024">
+  <!-- Wink Frame 3: Guiño completo con destello dorado -->
+  <g transform="rotate(-2.5 588 512)">
+    <rect x="76" y="0" width="1024" height="560" rx="192" fill="#FFFFFF" />
+    <rect x="0" y="464" width="1176" height="560" rx="192" fill="#FFFFFF" />
+    <!-- Ojo izquierdo cerrado en línea horizontal -->
+    <rect x="274" y="385" width="226" height="28" rx="14" fill="#070708" />
+    <rect x="678" y="310" width="224" height="206" rx="44" fill="#070708" />
+    <path d="M 530 540 Q 610 610 690 520" stroke="#070708" stroke-width="40" stroke-linecap="round" fill="none" />
+    <ellipse cx="230" cy="480" rx="64" ry="36" fill="#FDA4AF" opacity="0.8" />
+    <ellipse cx="946" cy="480" rx="64" ry="36" fill="#FDA4AF" opacity="0.8" />
+  </g>
+  <g fill="#FBBF24" transform="rotate(45 240 360)">
+    <polygon points="240,320 248,348 276,356 248,364 240,392 232,364 204,356 232,348" />
+  </g>
+</svg>

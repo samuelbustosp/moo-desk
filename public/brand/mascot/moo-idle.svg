@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1176 1024" width="1176" height="1024">
+  <defs>
+    <style>
+      .moo-body {
+        transform-origin: 588px 512px;
+        animation: moo-idle-breathe 4s ease-in-out infinite;
+      }
+      .moo-eye-left {
+        transform-origin: 387px 399px;
+        animation: moo-blink-left 4s ease-in-out infinite;
+      }
+      .moo-eye-right {
+        transform-origin: 790px 428px;
+        animation: moo-blink-right 4s ease-in-out infinite;
+      }
+
+      @keyframes moo-idle-breathe {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-16px) scale(1.01); }
+      }
+
+      @keyframes moo-blink-left {
+        0%, 90%, 100% {
+          transform: scaleY(1);
+        }
+        94% {
+          transform: scaleY(0.1);
+        }
+      }
+
+      @keyframes moo-blink-right {
+        0%, 90%, 100% {
+          transform: scaleY(1);
+        }
+        94% {
+          transform: scaleY(0.12);
+        }
+      }
+    </style>
+  </defs>
+
+  <g class="moo-body">
+    <!-- Silueta de la Mascota Moo -->
+    <rect x="76" y="0" width="1024" height="560" rx="192" fill="#FFFFFF" />
+    <rect x="0" y="464" width="1176" height="560" rx="192" fill="#FFFFFF" />
+
+    <!-- Ojo izquierdo cuadrado original con parpadeo animado -->
+    <rect class="moo-eye-left" x="274" y="286" width="226" height="226" rx="44" fill="#070708" />
+
+    <!-- Ojo derecho rectangular original con parpadeo animado -->
+    <rect class="moo-eye-right" x="678" y="344" width="224" height="168" rx="44" fill="#070708" />
+  </g>
+</svg>

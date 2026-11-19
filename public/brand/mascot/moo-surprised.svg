@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1176 1024" width="1176" height="1024">
+  <defs>
+    <style>
+      .moo-surprise-body {
+        transform-origin: 588px 600px;
+        animation: moo-pop-shock 2.2s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+      }
+      .moo-shock-rays {
+        transform-origin: 588px 512px;
+        animation: moo-rays-flash 2.2s ease-in-out infinite;
+      }
+      .moo-eyes-shock {
+        transform-origin: 588px 380px;
+        animation: moo-eyes-expand 2.2s ease-in-out infinite;
+      }
+
+      @keyframes moo-pop-shock {
+        0%, 100% { transform: scale(1) translateY(0); }
+        15% { transform: scale(0.95) translateY(10px); }
+        35% { transform: scale(1.05) translateY(-22px); }
+        55% { transform: scale(1) translateY(-4px); }
+      }
+
+      @keyframes moo-eyes-expand {
+        0%, 100% { transform: scale(1); }
+        35% { transform: scale(1.08); }
+      }
+
+      @keyframes moo-rays-flash {
+        0%, 15%, 85%, 100% { opacity: 0; transform: scale(0.8); }
+        35%, 65% { opacity: 1; transform: scale(1.1); }
+      }
+    </style>
+  </defs>
+
+  <!-- Rayos de energía / sorpresa amarillos parpadeando -->
+  <g class="moo-shock-rays" stroke="#F59E0B" stroke-width="26" stroke-linecap="round">
+    <line x1="160" y1="120" x2="100" y2="60" />
+    <line x1="588" y1="70" x2="588" y2="10" />
+    <line x1="1016" y1="120" x2="1076" y2="60" />
+  </g>
+
+  <g class="moo-surprise-body">
+    <!-- Silueta blanca -->
+    <rect x="76" y="0" width="1024" height="560" rx="192" fill="#FFFFFF" />
+    <rect x="0" y="464" width="1176" height="560" rx="192" fill="#FFFFFF" />
+
+    <!-- Ojos estrictamente cuadrados/rectangulares gigantes de asombro -->
+    <g class="moo-eyes-shock">
+      <!-- Ojo izquierdo cuadrado grande -->
+      <rect x="264" y="260" width="246" height="246" rx="48" fill="#070708" />
+      <!-- Ojo derecho cuadrado grande -->
+      <rect x="668" y="260" width="244" height="246" rx="48" fill="#070708" />
+
+      <!-- Brillos cuadrados blancos en los ojos (manteniendo la geometría) -->
+      <rect x="300" y="295" width="60" height="60" rx="14" fill="#FFFFFF" />
+      <rect x="704" y="295" width="60" height="60" rx="14" fill="#FFFFFF" />
+
+      <!-- Boquita abierta cuadrada redondeada de sorpresa -->
+      <rect x="538" y="530" width="100" height="110" rx="40" fill="#070708" />
+    </g>
+  </g>
+</svg>

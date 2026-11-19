@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --moo-bg: #09090b;
+  --moo-elevated: #121215;
+  --moo-secondary: #18181b;
+  --moo-text: #fafafa;
+  --moo-muted: #a1a1aa;
+  --moo-border: #27272a;
+  --moo-accent: #F59E0B;
+  --moo-accent-hover: #FBBF24;
+  --moo-accent-rgb: 245 158 11;
+  --moo-accent-hover-rgb: 251 191 36;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  color: var(--moo-text);
+  font-family: "Inter", "Segoe UI Variable", "Segoe UI", system-ui, -apple-system,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar sutil y discreto para ventanas compactas/expandidas */
+.moo-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.moo-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.moo-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(163, 173, 168, 0.24);
+  border-radius: 9999px;
+}
+
+.moo-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(163, 173, 168, 0.42);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Animaciones sutiles y funcionales de la mascota */
+@keyframes moo-breathe {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-1.5px);
+  }
+}
+
+@keyframes moo-listen-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.035);
+  }
+}
+
+@keyframes moo-think-tilt {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-2.5deg);
+  }
+  75% {
+    transform: rotate(2.5deg);
+  }
+}
+
+@keyframes moo-attention-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-2.5px);
+  }
+}
+
+.moo-anim-idle {
+  animation: moo-breathe 4.2s ease-in-out infinite;
+}
+
+.moo-anim-listening {
+  animation: moo-listen-pulse 1.6s ease-in-out infinite;
+}
+
+.moo-anim-processing {
+  animation: moo-think-tilt 1.8s ease-in-out infinite;
+}
+
+.moo-anim-responding {
+  animation: moo-breathe 1.4s ease-in-out infinite;
+}
+
+.moo-anim-attention {
+  animation: moo-attention-bounce 1.5s ease-in-out infinite;
+}
+
+/* Respeto estricto a reducir movimiento del sistema o preferencia de usuario */
+@media (prefers-reduced-motion: reduce) {
+  .moo-anim-idle,
+  .moo-anim-listening,
+  .moo-anim-processing,
+  .moo-anim-responding,
+  .moo-anim-attention {
+    animation: none !important;
+  }
+}
+
+html[data-reduce-motion="true"] .moo-anim-idle,
+html[data-reduce-motion="true"] .moo-anim-listening,
+html[data-reduce-motion="true"] .moo-anim-processing,
+html[data-reduce-motion="true"] .moo-anim-responding,
+html[data-reduce-motion="true"] .moo-anim-attention {
+  animation: none !important;
+}
