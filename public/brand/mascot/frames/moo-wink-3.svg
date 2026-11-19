@@ -6,7 +6,7 @@
     <!-- Ojo izquierdo cerrado en línea horizontal -->
     <rect x="274" y="385" width="226" height="28" rx="14" fill="#070708" />
     <rect x="678" y="310" width="224" height="206" rx="44" fill="#070708" />
-    <path d="M 530 540 Q 610 610 690 520" stroke="#070708" stroke-width="40" stroke-linecap="round" fill="none" />
+    <path d="M 480 565 Q 565 635 645 565" stroke="#070708" stroke-width="40" stroke-linecap="round" fill="none" />
     <ellipse cx="230" cy="480" rx="64" ry="36" fill="#FDA4AF" opacity="0.8" />
     <ellipse cx="946" cy="480" rx="64" ry="36" fill="#FDA4AF" opacity="0.8" />
   </g>

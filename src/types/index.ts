@@ -56,6 +56,7 @@ export interface MooPreferences {
   microphoneAllowed: boolean;
   rememberWindowPosition: boolean;
   startInCompactMode: boolean;
+  expandTrigger: "click" | "hover";
   windowPosition: WindowPosition;
   lastWindowMode: "notch" | "expanded";
   ollamaUrl: string;
@@ -71,6 +72,7 @@ export const DEFAULT_PREFERENCES: MooPreferences = {
   microphoneAllowed: true,
   rememberWindowPosition: true,
   startInCompactMode: true,
+  expandTrigger: "click",
   windowPosition: { x: 0, y: 0 },
   lastWindowMode: "notch",
   ollamaUrl: "http://127.0.0.1:11434",
@@ -80,7 +82,7 @@ export const DEFAULT_PREFERENCES: MooPreferences = {
 };
 
 export const WINDOW_DIMENSIONS = {
-  notch: { width: 210, height: 44 },
+  notch: { width: 210, height: 32 },
   expanded: { width: 820, height: 520 },
-  compact: { width: 210, height: 44 },
+  compact: { width: 210, height: 32 },
 } as const;

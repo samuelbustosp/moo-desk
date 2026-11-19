@@ -14,7 +14,7 @@ export function useMascot({
   initialState = "idle",
   isHidden = false,
   reduceMotion = false,
-  sleepTimeoutMs = 22000,
+  sleepTimeoutMs = 180000,
 }: UseMascotOptions = {}) {
   const [state, setState] = useState<MascotState>(initialState);
   const [isBlinking, setIsBlinking] = useState(false);

@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1176 1024" width="1176" height="1024">
+  <defs>
+    <style>
+      .moo-play-body {
+        transform-origin: 588px 600px;
+        animation: moo-play-bob 1.8s ease-in-out infinite;
+      }
+      .moo-bouncing-ball {
+        transform-origin: 1075px 165px;
+        animation: moo-ball-juggle 1.8s cubic-bezier(0.28, 0.84, 0.42, 1) infinite;
+      }
+      .moo-ball-lines {
+        animation: moo-lines-fade 1.8s ease-in-out infinite;
+      }
+
+      @keyframes moo-play-bob {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        40% { transform: translateY(-16px) rotate(1.5deg); }
+        70% { transform: translateY(4px) rotate(-1deg); }
+      }
+
+      @keyframes moo-ball-juggle {
+        0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+        35% { transform: translateY(-75px) rotate(45deg) scale(1.08); }
+        65% { transform: translateY(-15px) rotate(20deg) scale(0.96, 1.04); }
+        80% { transform: translateY(10px) rotate(5deg) scale(1.06, 0.94); }
+      }
+
+      @keyframes moo-lines-fade {
+        0%, 100% { opacity: 0.3; }
+        35% { opacity: 1; }
+        70% { opacity: 0.5; }
+      }
+    </style>
+  </defs>
+
+  <g class="moo-play-body">
+    <!-- Silueta blanca -->
+    <rect x="76" y="0" width="1024" height="560" rx="192" fill="#FFFFFF" />
+    <rect x="0" y="464" width="1176" height="560" rx="192" fill="#FFFFFF" />
+
+    <!-- Ojos mirando entusiasmados arriba a la derecha hacia la pelota -->
+    <rect x="274" y="270" width="226" height="230" rx="48" fill="#070708" />
+    <rect x="678" y="270" width="224" height="230" rx="48" fill="#070708" />
+
+    <!-- Brillos reflejados en la dirección de la pelota -->
+    <rect x="390" y="295" width="70" height="70" rx="18" fill="#FFFFFF" />
+    <rect x="794" y="295" width="70" height="70" rx="18" fill="#FFFFFF" />
+
+    <!-- Sonrisa traviesa y feliz -->
+    <path d="M 505 525 Q 588 625 671 525" stroke="#070708" stroke-width="40" stroke-linecap="round" fill="none" />
+
+    <!-- Rubor alegre verde menta suave -->
+    <ellipse cx="230" cy="480" rx="64" ry="36" fill="#34D399" opacity="0.5" />
+    <ellipse cx="946" cy="480" rx="64" ry="36" fill="#34D399" opacity="0.5" />
+  </g>
+
+  <!-- Líneas de trayectoria y rebote de la pelota -->
+  <g class="moo-ball-lines">
+    <path d="M 960 250 Q 990 200 1020 180" fill="none" stroke="#10B981" stroke-width="14" stroke-linecap="round" stroke-dasharray="16 12" />
+    <path d="M 1000 280 Q 1040 230 1070 200" fill="none" stroke="#F59E0B" stroke-width="12" stroke-linecap="round" stroke-dasharray="12 10" />
+    <!-- Estrellitas de juego / chispas -->
+    <polygon points="940,90 946,108 964,114 946,120 940,138 934,120 916,114 934,108" fill="#FBBF24" />
+  </g>
+
+  <!-- Pelota deportiva/playa animada rebotando en el aire -->
+  <g class="moo-bouncing-ball">
+    <g transform="translate(1010, 100)">
+      <circle cx="65" cy="65" r="65" fill="#3B82F6" />
+      <!-- Gajo rojo coral -->
+      <path d="M 65 0 A 65 65 0 0 1 130 65 C 100 65, 75 40, 65 0 Z" fill="#EF4444" />
+      <!-- Gajo amarillo cálido -->
+      <path d="M 130 65 A 65 65 0 0 1 65 130 C 65 95, 95 65, 130 65 Z" fill="#FBBF24" />
+      <!-- Gajo verde esmeralda -->
+      <path d="M 65 130 A 65 65 0 0 1 0 65 C 35 65, 65 95, 65 130 Z" fill="#10B981" />
+      <!-- Centro blanco de la pelota -->
+      <circle cx="65" cy="65" r="18" fill="#FFFFFF" />
+      <!-- Brillo especular -->
+      <ellipse cx="45" cy="35" rx="14" ry="9" fill="#FFFFFF" opacity="0.6" transform="rotate(-30 45 35)" />
+    </g>
+  </g>
+</svg>

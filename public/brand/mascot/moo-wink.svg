@@ -52,8 +52,8 @@
     <!-- Ojo derecho rectangular bien abierto -->
     <rect x="678" y="310" width="224" height="206" rx="44" fill="#070708" />
 
-    <!-- Sonrisita ladeada y pícara -->
-    <path d="M 530 540 Q 610 610 690 520" stroke="#070708" stroke-width="40" stroke-linecap="round" fill="none" />
+    <!-- Sonrisita ladeada y pícara con espacio amplio respecto al ojo -->
+    <path d="M 480 565 Q 565 635 645 565" stroke="#070708" stroke-width="40" stroke-linecap="round" fill="none" />
 
     <!-- Rubor suave -->
     <ellipse cx="230" cy="480" rx="64" ry="36" fill="#FDA4AF" opacity="0.65" />

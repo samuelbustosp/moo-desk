@@ -32,7 +32,7 @@ import type {
   WindowMode,
 } from "@/types";
 
-const STATE_ORDER: MascotState[] = [
+const SIDEBAR_STATE_ORDER: MascotState[] = [
   "idle",
   "smile",
   "wink",
@@ -40,7 +40,10 @@ const STATE_ORDER: MascotState[] = [
   "love",
   "cool",
   "surprised",
-  "listening",
+  "music",
+  "playing",
+  "angry",
+  "sad",
   "sleeping",
 ];
 
@@ -375,7 +378,17 @@ export function DeskShell({
 
   useEffect(() => {
     if (!isHydrated) return;
-    syncTauriWindowMode(windowMode);
+    if (windowMode === "expanded") {
+      syncTauriWindowMode("expanded");
+    } else if (windowMode === "notch") {
+      // Deferir el encogimiento de la ventana nativa de Tauri para que la animación CSS se aprecie fluida
+      const timer = setTimeout(() => {
+        syncTauriWindowMode("notch");
+      }, 320);
+      return () => clearTimeout(timer);
+    } else {
+      syncTauriWindowMode("hidden");
+    }
   }, [windowMode, isHydrated]);
 
   useEffect(() => {
@@ -418,8 +431,24 @@ export function DeskShell({
   const handleMouseEnterNotch = useCallback(() => {
     clearCollapseTimer();
     notifyActivity();
-    setWindowMode("expanded");
-  }, [clearCollapseTimer, notifyActivity]);
+    if (mascotState === "sleeping") {
+      setMascotState("idle");
+    }
+    if (!isExpanded && mascotState === "idle") {
+      triggerTemporaryState("smile", 1800, "idle");
+    }
+    if (preferences.expandTrigger === "hover") {
+      setWindowMode("expanded");
+    }
+  }, [
+    clearCollapseTimer,
+    notifyActivity,
+    mascotState,
+    isExpanded,
+    triggerTemporaryState,
+    setMascotState,
+    preferences.expandTrigger,
+  ]);
 
   const handleSectionChange = useCallback(
     (nextSection: SidebarSection) => {
@@ -433,15 +462,29 @@ export function DeskShell({
 
   const handleMouseLeaveNotch = useCallback(() => {
     clearCollapseTimer();
-    collapseTimeoutRef.current = setTimeout(() => {
-      setWindowMode("notch");
-      clearMessages();
-    }, 340);
-  }, [clearCollapseTimer, clearMessages]);
+    if (preferences.expandTrigger === "hover") {
+      collapseTimeoutRef.current = setTimeout(() => {
+        setWindowMode("notch");
+        clearMessages();
+      }, 340);
+    }
+  }, [clearCollapseTimer, clearMessages, preferences.expandTrigger]);
+
+  const handleClickNotch = useCallback(() => {
+    clearCollapseTimer();
+    notifyActivity();
+    if (mascotState === "sleeping") {
+      setMascotState("idle");
+    }
+    setWindowMode("expanded");
+  }, [clearCollapseTimer, notifyActivity, mascotState, setMascotState]);
 
   const toggleShortcutMode = useCallback(() => {
     clearCollapseTimer();
     notifyActivity();
+    if (mascotState === "sleeping") {
+      setMascotState("idle");
+    }
     setWindowMode((prev) => {
       const next = prev === "expanded" ? "notch" : "expanded";
       if (next === "notch") {
@@ -449,7 +492,7 @@ export function DeskShell({
       }
       return next;
     });
-  }, [clearCollapseTimer, notifyActivity, clearMessages]);
+  }, [clearCollapseTimer, notifyActivity, mascotState, setMascotState, clearMessages]);
 
   useEffect(() => {
     let cleanupNative: (() => void) | undefined;
@@ -493,8 +536,11 @@ export function DeskShell({
   }, [preferences.globalShortcut, toggleShortcutMode]);
 
   const cycleMascotState = useCallback(() => {
-    const idx = STATE_ORDER.indexOf(mascotState);
-    const next = STATE_ORDER[(idx + 1) % STATE_ORDER.length];
+    const idx = SIDEBAR_STATE_ORDER.indexOf(mascotState);
+    const next =
+      idx === -1
+        ? SIDEBAR_STATE_ORDER[0]
+        : SIDEBAR_STATE_ORDER[(idx + 1) % SIDEBAR_STATE_ORDER.length];
     setMascotState(next);
   }, [mascotState, setMascotState]);
 
@@ -514,33 +560,36 @@ export function DeskShell({
     <div
       onMouseEnter={handleMouseEnterNotch}
       onMouseLeave={handleMouseLeaveNotch}
-      onClick={() => {
-        if (!isExpanded) handleMouseEnterNotch();
-      }}
-      className="flex items-start justify-center select-none"
+      className={`flex items-start justify-center select-none ${
+        isExpanded ? "drop-shadow-[0_20px_50px_rgba(0,0,0,0.95)]" : ""
+      }`}
     >
-      {/* Curva cóncava izquierda del Notch */}
+      {/* Curva cóncava izquierda del Notch sin bordes */}
       <svg
-        width="16"
-        height="16"
-        viewBox="0 0 16 16"
-        className="text-[#060607] fill-current shrink-0"
+        width="14"
+        height="14"
+        viewBox="0 0 14 14"
+        className="shrink-0 text-[#060607]/85 fill-current"
       >
-        <path d="M16 0H0C8.837 0 16 7.163 16 16V0Z" />
+        <path d="M14 0H0C7.732 0 14 6.268 14 14V0Z" />
       </svg>
 
-      {/* Cuerpo del Notch con animación fluida entre Plegado y Desplegado */}
+      {/* Cuerpo del Notch sin bordes externos, con sombra profunda en desplegada */}
       <div
-        className={`relative overflow-hidden border-x border-b bg-[#060607] transition-[width,height,border-radius,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        className={`relative overflow-hidden transition-[width,height,border-radius,background-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
           isExpanded
-            ? "h-[510px] w-[780px] max-w-[95vw] rounded-b-3xl border-zinc-800/90 shadow-[0_28px_72px_rgba(0,0,0,0.92)]"
-            : "h-10 w-44 cursor-pointer rounded-b-2xl border-zinc-800/80 shadow-[0_12px_32px_rgba(0,0,0,0.9)] hover:border-moo-accent/45"
+            ? "h-[510px] w-[780px] max-w-[95vw] rounded-b-3xl bg-[#060607]/95 backdrop-blur-xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.95)]"
+            : "h-[30px] w-40 cursor-pointer rounded-b-xl bg-[#060607]/85 backdrop-blur-md"
         }`}
       >
         {/* Vista Plegada: Solo el logo de Moo en blanco + puntito del color de estado parpadeando */}
         <div
           aria-hidden={isExpanded}
-          className={`absolute inset-0 flex items-center justify-center px-4 transition-all duration-200 ${
+          onClick={(e) => {
+            e.stopPropagation();
+            handleClickNotch();
+          }}
+          className={`absolute inset-0 flex items-center justify-center px-4 cursor-pointer transition-all duration-200 ${
             isExpanded
               ? "pointer-events-none scale-90 opacity-0"
               : "scale-100 opacity-100 delay-75"
@@ -548,11 +597,11 @@ export function DeskShell({
         >
           <MooMascot
             state={mascotState}
-            size="sm"
+            size="xs"
             isBlinking={isBlinking}
             reduceMotion={preferences.reduceMotion}
           />
-          <span className="absolute right-4 flex h-2 w-2 items-center justify-center">
+          <span className="absolute right-3.5 flex h-1.5 w-1.5 items-center justify-center">
             {!preferences.reduceMotion && (
               <span
                 className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
@@ -560,7 +609,7 @@ export function DeskShell({
               />
             )}
             <span
-              className="relative inline-flex h-2 w-2 rounded-full"
+              className="relative inline-flex h-1.5 w-1.5 rounded-full"
               style={{ backgroundColor: dotColor }}
             />
           </span>
@@ -606,18 +655,19 @@ export function DeskShell({
             onSendMessage={handleSendMessageAndNavigate}
             onClearMessages={clearMessages}
             onUserTyping={handleUserTyping}
+            onCollapse={() => setWindowMode("notch")}
           />
         </div>
       </div>
 
-      {/* Curva cóncava derecha del Notch */}
+      {/* Curva cóncava derecha del Notch sin bordes */}
       <svg
-        width="16"
-        height="16"
-        viewBox="0 0 16 16"
-        className="text-[#060607] fill-current shrink-0"
+        width="14"
+        height="14"
+        viewBox="0 0 14 14"
+        className="shrink-0 text-[#060607]/85 fill-current"
       >
-        <path d="M0 0H16C7.163 0 0 7.163 0 16V0Z" />
+        <path d="M0 0H14C6.268 0 0 6.268 0 14V0Z" />
       </svg>
     </div>
   );

@@ -10,7 +10,11 @@ export type MascotState =
   | "wink"
   | "sleeping"
   | "surprised"
-  | "cool";
+  | "cool"
+  | "angry"
+  | "sad"
+  | "music"
+  | "playing";
 
 export interface MascotStateMeta {
   id: MascotState;
@@ -104,5 +108,33 @@ export const MASCOT_STATES: Record<MascotState, MascotStateMeta> = {
     shortStatus: "Gafas oscuras estilo agente",
     description: "Moo con gafas de sol oscuras y reflejos cyber.",
     badgeColor: "#38BDF8",
+  },
+  angry: {
+    id: "angry",
+    label: "Enojado",
+    shortStatus: "¡Moo está molesto!",
+    description: "Cejas fruncidas en ángulo, boca disgustada y símbolo de furia cómico.",
+    badgeColor: "#EF4444",
+  },
+  sad: {
+    id: "sad",
+    label: "Triste",
+    shortStatus: "Necesita un abrazo",
+    description: "Cejas caídas compungidas, boquita triste y una lagrimita tierna.",
+    badgeColor: "#60A5FA",
+  },
+  music: {
+    id: "music",
+    label: "Música",
+    shortStatus: "Sintiendo el ritmo",
+    description: "Moo bailando con notas musicales flotantes y máxima vibra.",
+    badgeColor: "#A855F7",
+  },
+  playing: {
+    id: "playing",
+    label: "Jugando",
+    shortStatus: "¡Divirtiéndose con la pelota!",
+    description: "Moo jugando con una pelota saltarina multicolor llena de energía.",
+    badgeColor: "#10B981",
   },
 };

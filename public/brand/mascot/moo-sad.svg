@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1176 1024" width="1176" height="1024">
+  <defs>
+    <style>
+      .moo-sad-body {
+        transform-origin: 588px 600px;
+        animation: moo-sad-sigh 3.6s ease-in-out infinite;
+      }
+      .moo-tear {
+        transform-origin: 290px 515px;
+        animation: moo-tear-drip 2.4s ease-in-out infinite;
+      }
+
+      @keyframes moo-sad-sigh {
+        0%, 100% { transform: translateY(0) scale(1); }
+        45% { transform: translateY(12px) scale(0.99, 0.98); }
+        70% { transform: translateY(4px) scale(1); }
+      }
+
+      @keyframes moo-tear-drip {
+        0% { transform: translateY(0) scale(0.85); opacity: 0.4; }
+        50% { transform: translateY(18px) scale(1.08); opacity: 1; }
+        100% { transform: translateY(38px) scale(0.8); opacity: 0; }
+      }
+    </style>
+  </defs>
+
+  <g class="moo-sad-body">
+    <!-- Silueta blanca -->
+    <rect x="76" y="0" width="1024" height="560" rx="192" fill="#FFFFFF" />
+    <rect x="0" y="464" width="1176" height="560" rx="192" fill="#FFFFFF" />
+
+    <!-- Ceja izquierda triste inclinada hacia afuera -->
+    <rect x="264" y="225" width="230" height="34" rx="17" fill="#070708" transform="rotate(-15 379 242)" />
+
+    <!-- Ceja derecha triste inclinada hacia afuera -->
+    <rect x="682" y="225" width="230" height="34" rx="17" fill="#070708" transform="rotate(15 797 242)" />
+
+    <!-- Ojos caídos / compungidos -->
+    <rect x="274" y="295" width="226" height="215" rx="50" fill="#070708" />
+    <rect x="678" y="295" width="224" height="215" rx="50" fill="#070708" />
+
+    <!-- Brillos de luz vidriosa en los ojos -->
+    <circle cx="330" cy="350" r="24" fill="#FFFFFF" opacity="0.9" />
+    <circle cx="734" cy="350" r="24" fill="#FFFFFF" opacity="0.9" />
+    <circle cx="370" cy="400" r="14" fill="#FFFFFF" opacity="0.6" />
+    <circle cx="774" cy="400" r="14" fill="#FFFFFF" opacity="0.6" />
+
+    <!-- Boquita triste hacia abajo -->
+    <path d="M 510 590 Q 588 535 666 590" stroke="#070708" stroke-width="38" stroke-linecap="round" fill="none" />
+
+    <!-- Lagrimita brillante que cae -->
+    <g class="moo-tear">
+      <path d="M 290 515 C 270 550, 248 580, 248 610 A 32 32 0 0 0 312 610 C 312 580, 290 550, 290 515 Z" fill="#38BDF8" opacity="0.95" />
+    </g>
+  </g>
+</svg>

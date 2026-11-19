@@ -10,6 +10,7 @@ import {
   Check,
   ChevronLeft,
   ChevronRight,
+  ChevronUp,
   Clock,
   Droplets,
   Dumbbell,
@@ -112,6 +113,7 @@ interface ExpandedWindowProps {
   ) => void;
   onClearMessages?: () => void;
   onUserTyping?: () => void;
+  onCollapse?: () => void;
 }
 
 const NAV_ITEMS: {
@@ -224,6 +226,7 @@ export function ExpandedWindow({
   onSendMessage,
   onClearMessages,
   onUserTyping,
+  onCollapse,
 }: ExpandedWindowProps) {
   const meta = MASCOT_STATES[mascotState] ?? MASCOT_STATES.idle;
   const statusColor =
@@ -252,7 +255,9 @@ export function ExpandedWindow({
   } = useVoiceRecorder({
     microphoneAllowed,
     onInterimTranscript: (liveText) => {
-      setMessageInput(liveText);
+      if (liveText) {
+        setMessageInput(liveText);
+      }
     },
     onTranscribingStateChange: (transcribing) => {
       if (transcribing) {
@@ -262,13 +267,13 @@ export function ExpandedWindow({
     },
     onCaptureComplete: ({ transcript, audioBase64, audioMimeType }) => {
       const textToSend = transcript.trim() || messageInput.trim();
+      setMessageInput("");
       if (textToSend) {
         onSendMessage(textToSend, {
           isVoice: true,
           audioBase64,
           audioMimeType,
         });
-        setMessageInput("");
       } else {
         onSetMascotState?.("idle");
       }
@@ -553,12 +558,24 @@ export function ExpandedWindow({
           </nav>
         </div>
 
-        {/* Footer del Sidebar: Versión de Moo */}
+        {/* Footer del Sidebar: Versión de Moo y botón de plegado */}
         <div className="flex items-center justify-between border-t border-zinc-800/60 px-1.5 pt-3 text-[11px] text-zinc-500">
-          <span className="font-display text-xs text-zinc-400">Moo</span>
-          <span className="rounded-md border border-moo-accent/25 bg-moo-accent/10 px-1.5 py-0.5 font-mono text-[10px] text-moo-accent">
-            v0.1.0
-          </span>
+          <div className="flex items-center gap-1.5">
+            <span className="font-display text-xs text-zinc-400">Moo</span>
+            <span className="rounded-md border border-moo-accent/25 bg-moo-accent/10 px-1.5 py-0.5 font-mono text-[10px] text-moo-accent">
+              v2.2
+            </span>
+          </div>
+          {onCollapse && (
+            <button
+              type="button"
+              onClick={onCollapse}
+              title="Plegar Notch (Ctrl+Shift+M)"
+              className="rounded-lg p-1 text-zinc-500 hover:bg-zinc-800 hover:text-zinc-200 transition"
+            >
+              <ChevronUp className="h-3.5 w-3.5" />
+            </button>
+          )}
         </div>
       </aside>
 

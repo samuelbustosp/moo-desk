@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1176 1024" width="1176" height="1024">
+  <defs>
+    <style>
+      .moo-music-body {
+        transform-origin: 588px 600px;
+        animation: moo-music-groove 1.6s ease-in-out infinite;
+      }
+      .moo-note-1 {
+        transform-origin: 150px 100px;
+        animation: moo-note-float 2s ease-in-out infinite;
+      }
+      .moo-note-2 {
+        transform-origin: 1040px 60px;
+        animation: moo-note-float 2s ease-in-out 0.4s infinite;
+      }
+      .moo-note-3 {
+        transform-origin: 640px 10px;
+        animation: moo-note-float 2s ease-in-out 0.8s infinite;
+      }
+
+      @keyframes moo-music-groove {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        25% { transform: translateY(-14px) rotate(-2deg); }
+        75% { transform: translateY(-6px) rotate(2deg); }
+      }
+
+      @keyframes moo-note-float {
+        0%, 100% { transform: translateY(0) scale(1) rotate(0deg); opacity: 0.85; }
+        50% { transform: translateY(-18px) scale(1.15) rotate(6deg); opacity: 1; }
+      }
+    </style>
+  </defs>
+
+  <g class="moo-music-body">
+    <!-- Silueta blanca -->
+    <rect x="76" y="0" width="1024" height="560" rx="192" fill="#FFFFFF" />
+    <rect x="0" y="464" width="1176" height="560" rx="192" fill="#FFFFFF" />
+
+    <!-- Ojos felices curvados al ritmo de la música ^ ^ -->
+    <path d="M 280 430 Q 387 310 494 430" stroke="#070708" stroke-width="50" stroke-linecap="round" fill="none" />
+    <path d="M 682 430 Q 790 310 898 430" stroke="#070708" stroke-width="50" stroke-linecap="round" fill="none" />
+
+    <!-- Sonrisa alegre amplia -->
+    <path d="M 495 530 Q 588 625 681 530" stroke="#070708" stroke-width="42" stroke-linecap="round" fill="none" />
+
+    <!-- Rubor rosado musical -->
+    <ellipse cx="230" cy="480" rx="74" ry="40" fill="#F472B6" opacity="0.75" />
+    <ellipse cx="946" cy="480" rx="74" ry="40" fill="#F472B6" opacity="0.75" />
+  </g>
+
+  <!-- Notas musicales flotantes animadas -->
+  <!-- Nota izquierda (corchea ♪) en magenta -->
+  <g class="moo-note-1" transform="translate(130, 80) rotate(-15 40 50)" fill="#EC4899">
+    <ellipse cx="30" cy="80" rx="26" ry="20" transform="rotate(-20 30 80)" />
+    <rect x="44" y="15" width="14" height="68" rx="7" />
+    <path d="M 52 15 C 75 15, 88 35, 88 55 C 88 40, 72 30, 52 30 Z" />
+  </g>
+
+  <!-- Doble corchea derecha (♫) en violeta vibrante -->
+  <g class="moo-note-2" transform="translate(1000, 40) rotate(12 60 50)" fill="#A855F7">
+    <ellipse cx="25" cy="80" rx="24" ry="18" transform="rotate(-20 25 80)" />
+    <ellipse cx="95" cy="70" rx="24" ry="18" transform="rotate(-20 95 70)" />
+    <rect x="38" y="18" width="12" height="64" rx="6" />
+    <rect x="108" y="8" width="12" height="64" rx="6" />
+    <polygon points="38,18 120,8 120,24 38,34" />
+  </g>
+
+  <!-- Nota pequeña central (♪) en cian brillante -->
+  <g class="moo-note-3" transform="translate(620, -10) rotate(8 20 30)" fill="#06B6D4">
+    <ellipse cx="22" cy="50" rx="18" ry="14" transform="rotate(-20 22 50)" />
+    <rect x="32" y="10" width="10" height="42" rx="5" />
+    <path d="M 38 10 C 52 10, 62 24, 62 38 C 62 28, 50 20, 38 20 Z" />
+  </g>
+</svg>

@@ -248,15 +248,15 @@ export function useVoiceRecorder({
           }
         }
 
-        let finalTranscript = "";
+        let finalTranscript = accumulatedTranscriptRef.current.trim();
 
-        // Siempre priorizar la transcripción neuronal del audio real grabado (Whisper Small en español)
-        if (audioBlob.size > 0) {
+        // Solo si la transcripción en vivo no capturó texto (offline o no soportado), procesar con Whisper local
+        if (!finalTranscript && audioBlob.size > 0) {
           setIsTranscribingAudio(true);
-          setTranscribingStatus("Transcribiendo tu audio con Whisper Small...");
+          setTranscribingStatus("Transcribiendo audio con Whisper...");
           onTranscribingStateChange?.(
             true,
-            "Transcribiendo tu audio con Whisper Small..."
+            "Transcribiendo audio con Whisper..."
           );
           try {
             finalTranscript = await transcribeAudioBlobLocally(
@@ -273,11 +273,6 @@ export function useVoiceRecorder({
             setTranscribingStatus("");
             onTranscribingStateChange?.(false, "");
           }
-        }
-
-        // Si por alguna razón falló Whisper local, usar como respaldo la captura de Web Speech API
-        if (!finalTranscript) {
-          finalTranscript = accumulatedTranscriptRef.current.trim();
         }
 
         if (!finalTranscript) {
@@ -373,6 +368,9 @@ export function useVoiceRecorder({
 
     if (recognitionRef.current) {
       try {
+        recognitionRef.current.onresult = null;
+        recognitionRef.current.onerror = null;
+        recognitionRef.current.onend = null;
         recognitionRef.current.stop();
       } catch {
         // ignore

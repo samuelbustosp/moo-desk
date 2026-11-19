@@ -33,27 +33,27 @@ export function CompactWindow({
       aria-label="Moo"
       className="group relative flex items-start justify-center cursor-pointer select-none"
     >
-      {/* Curva cóncava izquierda del Notch */}
+      {/* Curva cóncava izquierda del Notch sin borde */}
       <svg
-        width="16"
-        height="16"
-        viewBox="0 0 16 16"
-        className="text-[#060607] fill-current shrink-0"
+        width="14"
+        height="14"
+        viewBox="0 0 14 14"
+        className="shrink-0 text-[#060607]/85 fill-current"
       >
-        <path d="M16 0H0C8.837 0 16 7.163 16 16V0Z" />
+        <path d="M14 0H0C7.732 0 14 6.268 14 14V0Z" />
       </svg>
 
       {/* Notch alargado: logo de Moo en blanco + puntito de estado parpadeando */}
-      <div className="relative flex h-10 w-44 items-center justify-center rounded-b-2xl border-x border-b border-zinc-800/80 bg-[#060607] px-4 shadow-[0_12px_32px_rgba(0,0,0,0.9)] transition-colors duration-300 group-hover:border-moo-accent/40">
+      <div className="relative flex h-[30px] w-40 items-center justify-center rounded-b-xl bg-[#060607]/85 px-4 backdrop-blur-md">
         <MooMascot
           state={mascotState}
-          size="sm"
+          size="xs"
           isBlinking={isBlinking}
           reduceMotion={reduceMotion}
         />
 
         {/* Puntito del color de estado parpadeando a la derecha del Notch */}
-        <span className="absolute right-4 flex h-2 w-2 items-center justify-center">
+        <span className="absolute right-3.5 flex h-1.5 w-1.5 items-center justify-center">
           {!reduceMotion && (
             <span
               className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
@@ -61,20 +61,20 @@ export function CompactWindow({
             />
           )}
           <span
-            className="relative inline-flex h-2 w-2 rounded-full"
+            className="relative inline-flex h-1.5 w-1.5 rounded-full"
             style={{ backgroundColor: dotColor }}
           />
         </span>
       </div>
 
-      {/* Curva cóncava derecha del Notch */}
+      {/* Curva cóncava derecha del Notch sin borde */}
       <svg
-        width="16"
-        height="16"
-        viewBox="0 0 16 16"
-        className="text-[#060607] fill-current shrink-0"
+        width="14"
+        height="14"
+        viewBox="0 0 14 14"
+        className="shrink-0 text-[#060607]/85 fill-current"
       >
-        <path d="M0 0H16C7.163 0 0 7.163 0 16V0Z" />
+        <path d="M0 0H14C6.268 0 0 6.268 0 14V0Z" />
       </svg>
     </div>
   );

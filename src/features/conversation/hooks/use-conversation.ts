@@ -135,10 +135,11 @@ export function useConversation({
           onMascotStateChange?.("smile");
         }
 
+        const replyId = res.id || `moo-${Date.now()}`;
         const replyMsg: ConversationMessage = {
-          id: res.id || `moo-${Date.now()}`,
+          id: replyId,
           role: "moo",
-          content: res.reply,
+          content: "",
           timestamp: new Date().toLocaleTimeString([], {
             hour: "2-digit",
             minute: "2-digit",
@@ -150,6 +151,23 @@ export function useConversation({
         };
 
         setMessages((prev) => [...prev, replyMsg]);
+
+        // Efecto streaming natural de respuesta palabra por palabra
+        const fullReply = res.reply || "";
+        const tokens = fullReply.split(/(\s+)/);
+        let accumulated = "";
+
+        for (let i = 0; i < tokens.length; i++) {
+          accumulated += tokens[i];
+          const current = accumulated;
+          setMessages((prev) =>
+            prev.map((m) => (m.id === replyId ? { ...m, content: current } : m))
+          );
+          if (tokens[i].trim().length > 0) {
+            await new Promise((resolve) => setTimeout(resolve, 24));
+          }
+        }
+
         return res;
       } finally {
         setIsSimulatingReply(false);

@@ -9,6 +9,7 @@ import {
   Keyboard,
   Lock,
   Mic,
+  MousePointer,
   Palette,
   RefreshCw,
   RotateCcw,
@@ -24,29 +25,36 @@ import { Badge, Button, Card, Input } from "@/components/ui/primitives";
 import type { AccentTheme } from "@/types";
 import type { AgentStatus } from "@/types/agent-contract";
 
-type SettingsTab = "ia" | "voice" | "appearance" | "system";
+type SettingsTab = "asistente" | "microfono" | "apariencia" | "atajos";
 
 const SETTINGS_TABS: {
   id: SettingsTab;
   label: string;
   icon: React.ComponentType<{ className?: string }>;
 }[] = [
-  { id: "ia", label: "IA y Sandbox", icon: Bot },
-  { id: "voice", label: "Voz y Micrófono", icon: Mic },
-  { id: "appearance", label: "Apariencia", icon: Palette },
-  { id: "system", label: "Atajos y Sistema", icon: Keyboard },
+  { id: "asistente", label: "Asistente", icon: Bot },
+  { id: "microfono", label: "Micrófono", icon: Mic },
+  { id: "apariencia", label: "Apariencia", icon: Palette },
+  { id: "atajos", label: "Atajos", icon: Keyboard },
 ];
 
 const PRESET_SHORTCUTS = ["Ctrl+Shift+M", "Alt+M", "Ctrl+Alt+M", "Alt+Space"];
 
-function SwitchToggle({
+/**
+ * Switch con diseño y tokens de shadcn UI
+ */
+function Switch({
   checked,
-  onChange,
+  onCheckedChange,
+  disabled = false,
   label,
+  className = "",
 }: {
   checked: boolean;
-  onChange: (next: boolean) => void;
-  label: string;
+  onCheckedChange?: (checked: boolean) => void;
+  disabled?: boolean;
+  label?: string;
+  className?: string;
 }) {
   return (
     <button
@@ -54,18 +62,21 @@ function SwitchToggle({
       role="switch"
       aria-checked={checked}
       aria-label={label}
-      onClick={() => onChange(!checked)}
-      className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border transition-colors duration-200 focus:outline-none ${
-        checked
-          ? "border-moo-accent bg-moo-accent"
-          : "border-zinc-700 bg-zinc-900"
-      }`}
+      disabled={disabled}
+      onClick={() => {
+        if (!disabled && onCheckedChange) {
+          onCheckedChange(!checked);
+        }
+      }}
+      className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-moo-accent focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 disabled:cursor-not-allowed disabled:opacity-50 ${
+        checked ? "bg-moo-accent" : "bg-zinc-800"
+      } ${className}`}
     >
       <span
-        className={`inline-block h-3.5 w-3.5 transform rounded-full transition-transform duration-200 ${
+        className={`pointer-events-none block h-4 w-4 rounded-full shadow-md ring-0 transition-transform duration-200 ease-in-out ${
           checked
             ? "translate-x-4 bg-zinc-950"
-            : "translate-x-0.5 bg-zinc-400"
+            : "translate-x-0 bg-zinc-300"
         }`}
       />
     </button>
@@ -74,7 +85,7 @@ function SwitchToggle({
 
 export function SettingsPanel() {
   const { preferences, updatePreference, resetPreferences } = usePreferences();
-  const [activeTab, setActiveTab] = useState<SettingsTab>("ia");
+  const [activeTab, setActiveTab] = useState<SettingsTab>("asistente");
   const [recordingShortcut, setRecordingShortcut] = useState(false);
   const [agentStatus, setAgentStatus] = useState<AgentStatus | null>(null);
   const [checkingOllama, setCheckingOllama] = useState(false);
@@ -160,7 +171,7 @@ export function SettingsPanel() {
             Ajustes
           </h2>
           <p className="mt-0.5 text-xs text-zinc-400">
-            Configura el modelo de IA, permisos de voz, apariencia y sistema.
+            Personaliza el asistente, micrófono, apariencia y atajos de Moo.
           </p>
         </div>
         <Button variant="outline" size="sm" onClick={resetPreferences}>
@@ -169,7 +180,7 @@ export function SettingsPanel() {
         </Button>
       </div>
 
-      {/* Barra de Tabs */}
+      {/* Barra de Tabs Simplificada con una sola palabra */}
       <div className="grid grid-cols-2 gap-1.5 rounded-xl border border-zinc-800/80 bg-zinc-950/70 p-1 sm:grid-cols-4">
         {SETTINGS_TABS.map((tab) => {
           const Icon = tab.icon;
@@ -196,15 +207,15 @@ export function SettingsPanel() {
         })}
       </div>
 
-      {/* TAB 1: IA Y SANDBOX */}
-      {activeTab === "ia" && (
+      {/* TAB 1: ASISTENTE */}
+      {activeTab === "asistente" && (
         <div className="space-y-4">
-          {/* Card: Modelo y Conexión */}
+          {/* Card: Servidor Local / Ollama */}
           <Card className="p-4 space-y-3.5 border-moo-accent/35">
             <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-2 font-semibold text-white">
                 <Bot className="h-4 w-4 text-moo-accent" />
-                <span>Modelo de IA & Servidor Local</span>
+                <span>Modelo de IA y Motor Local</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <Badge variant="accent" className="font-mono text-[10px]">
@@ -229,11 +240,10 @@ export function SettingsPanel() {
             </div>
 
             <p className="text-[11px] text-zinc-400 leading-relaxed">
-              Moo puede conectarse a un modelo local vía Ollama o utilizar su motor
-              integrado de procesamiento seguro sin dependencias externas.
+              Moo procesa órdenes con su motor seguro local o mediante conexión directa
+              a tu servidor Ollama local sin enviar datos a la nube.
             </p>
 
-            {/* Configuración de Ollama Local */}
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 pt-1">
               <div className="space-y-1">
                 <label className="text-[11px] font-medium text-zinc-300">
@@ -262,49 +272,84 @@ export function SettingsPanel() {
             </div>
           </Card>
 
-          {/* Card: Sandbox Estricto de Permisos */}
-          <Card className="p-4 space-y-3">
+          {/* Card: Permisos del Sandbox con Switches Shadcn */}
+          <Card className="p-4 space-y-3.5">
             <div className="flex items-center justify-between">
-              <span className="flex items-center gap-1.5 text-xs font-semibold text-white">
+              <div className="flex items-center gap-2">
                 <ShieldCheck className="h-4 w-4 text-emerald-400" />
-                Modo Sandbox Estricto (Solo dentro de Moo Desk)
-              </span>
+                <span className="text-xs font-semibold text-white">
+                  Sandbox de Permisos Estricto
+                </span>
+              </div>
               <span className="inline-flex items-center gap-1 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] text-emerald-300">
-                <Lock className="h-2.5 w-2.5" /> Bloqueado sin permiso
+                <Lock className="h-2.5 w-2.5" /> Aislamiento Activo
               </span>
             </div>
 
             <p className="text-[11px] text-zinc-400 leading-relaxed">
-              Moo <strong className="text-zinc-200">no puede</strong> realizar
-              acciones fuera de la aplicación ni eliminar datos del usuario. Solo
-              tiene autorización para{" "}
-              <strong className="text-moo-accent">
-                crear, modificar y completar
-              </strong>{" "}
-              dentro de estos 3 módulos:
+              El asistente opera bajo reglas estrictas: solo puede crear, modificar
+              y completar dentro de la app. No tiene permisos de eliminación ni
+              acceso al sistema operativo.
             </p>
 
-            <div className="flex flex-wrap items-center gap-1.5 pt-1">
-              <span className="rounded-lg border border-moo-accent/35 bg-moo-accent/10 px-2.5 py-1 text-[10px] font-medium text-moo-accent">
-                ✓ Recordatorios (Crear · Modificar · Completar)
-              </span>
-              <span className="rounded-lg border border-moo-accent/35 bg-moo-accent/10 px-2.5 py-1 text-[10px] font-medium text-moo-accent">
-                ✓ Tareas (Crear · Modificar · Completar)
-              </span>
-              <span className="rounded-lg border border-moo-accent/35 bg-moo-accent/10 px-2.5 py-1 text-[10px] font-medium text-moo-accent">
-                ✓ Hábitos (Crear · Modificar · Completar)
-              </span>
-              <span className="inline-flex items-center gap-1 rounded-lg border border-red-500/30 bg-red-500/10 px-2.5 py-1 text-[10px] font-medium text-red-300">
-                <ShieldAlert className="h-3 w-3" /> Eliminar / Acciones externas:
-                Denegado
-              </span>
+            <div className="space-y-2.5 pt-1">
+              <div className="flex items-center justify-between rounded-xl border border-zinc-800/80 bg-zinc-950/60 p-2.5">
+                <div>
+                  <div className="text-xs font-medium text-white">
+                    Recordatorios de Calendario
+                  </div>
+                  <div className="text-[10px] text-zinc-400">
+                    Crear, modificar y marcar como completados
+                  </div>
+                </div>
+                <Switch checked={true} label="Recordatorios" disabled={true} />
+              </div>
+
+              <div className="flex items-center justify-between rounded-xl border border-zinc-800/80 bg-zinc-950/60 p-2.5">
+                <div>
+                  <div className="text-xs font-medium text-white">
+                    Tareas Programadas
+                  </div>
+                  <div className="text-[10px] text-zinc-400">
+                    Crear, modificar frecuencia y marcar como hechas
+                  </div>
+                </div>
+                <Switch checked={true} label="Tareas" disabled={true} />
+              </div>
+
+              <div className="flex items-center justify-between rounded-xl border border-zinc-800/80 bg-zinc-950/60 p-2.5">
+                <div>
+                  <div className="text-xs font-medium text-white">
+                    Hábitos y Lore
+                  </div>
+                  <div className="text-[10px] text-zinc-400">
+                    Crear hábitos, registrar cumplimiento y avanzar rachas
+                  </div>
+                </div>
+                <Switch checked={true} label="Hábitos" disabled={true} />
+              </div>
+
+              <div className="flex items-center justify-between rounded-xl border border-red-500/30 bg-red-500/10 p-2.5">
+                <div className="flex items-start gap-2">
+                  <ShieldAlert className="mt-0.5 h-3.5 w-3.5 text-red-400" />
+                  <div>
+                    <div className="text-xs font-medium text-red-200">
+                      Eliminar datos o ejecutar comandos externos
+                    </div>
+                    <div className="text-[10px] text-red-300/80">
+                      Bloqueado por sandbox para proteger tus datos
+                    </div>
+                  </div>
+                </div>
+                <Switch checked={false} label="Comandos externos" disabled={true} />
+              </div>
             </div>
           </Card>
         </div>
       )}
 
-      {/* TAB 2: VOZ Y MICRÓFONO */}
-      {activeTab === "voice" && (
+      {/* TAB 2: MICRÓFONO */}
+      {activeTab === "microfono" && (
         <div className="space-y-4">
           <Card className="p-4 space-y-4">
             <div className="flex items-center justify-between gap-3">
@@ -312,11 +357,11 @@ export function SettingsPanel() {
                 <Mic className="mt-0.5 h-4 w-4 shrink-0 text-moo-accent" />
                 <div>
                   <div className="text-xs font-semibold text-white">
-                    Permiso de micrófono
+                    Captura por micrófono
                   </div>
                   <p className="mt-0.5 text-[11px] text-zinc-400">
-                    Autoriza a Moo a capturar tu voz con MediaRecorder cuando
-                    mantienes presionado el botón del micrófono o usas el atajo.
+                    Habilita la grabación de audio para dictar órdenes por voz a Moo
+                    manteniendo presionado el botón o usando el atajo.
                   </p>
                 </div>
               </div>
@@ -330,14 +375,14 @@ export function SettingsPanel() {
                   <Mic className="h-3.5 w-3.5 text-moo-accent" />
                   <span>
                     {micTestStatus === "granted"
-                      ? "Micrófono verificado"
+                      ? "Verificado ✓"
                       : "Verificar permiso"}
                   </span>
                 </Button>
-                <SwitchToggle
+                <Switch
                   label="Permiso de micrófono"
                   checked={preferences.microphoneAllowed}
-                  onChange={(val) => updatePreference("microphoneAllowed", val)}
+                  onCheckedChange={(val) => updatePreference("microphoneAllowed", val)}
                 />
               </div>
             </div>
@@ -352,8 +397,7 @@ export function SettingsPanel() {
 
             {micTestStatus === "granted" && (
               <p className="rounded-lg border border-emerald-500/30 bg-emerald-500/10 p-2.5 text-[11px] text-emerald-300">
-                ✓ Acceso al micrófono verificado correctamente. Tu voz está lista
-                para ser procesada.
+                ✓ Acceso al micrófono verificado correctamente.
               </p>
             )}
           </Card>
@@ -363,31 +407,28 @@ export function SettingsPanel() {
               <Volume2 className="mt-0.5 h-4 w-4 shrink-0 text-moo-accent" />
               <div>
                 <div className="text-xs font-semibold text-white">
-                  Motor de Transcripción Local (Whisper)
+                  Transcripción Inmediata y Whisper Local
                 </div>
                 <p className="mt-1 text-[11px] text-zinc-400 leading-relaxed">
-                  El audio capturado se procesa en tu propio ordenador con{" "}
-                  <strong className="text-zinc-200">
-                    Whisper Base Cuantizado (ONNX)
-                  </strong>{" "}
-                  mediante Web Audio API a 16 kHz mono con normalización de picos
-                  y recorte de silencios.
+                  Cuando hablas, Moo captura tu voz y genera la transcripción en vivo
+                  sin repetir el procesamiento. Si la conexión offline lo requiere,
+                  utiliza Whisper cuantizado localmente sin enviar datos a servidores.
                 </p>
               </div>
             </div>
 
             <div className="grid grid-cols-1 gap-2 pt-1 sm:grid-cols-3">
               <div className="rounded-lg border border-zinc-800 bg-zinc-950/60 p-2.5">
+                <div className="text-[10px] font-medium text-zinc-400">Velocidad</div>
+                <div className="mt-0.5 text-xs font-semibold text-white">Sin espera redundante</div>
+              </div>
+              <div className="rounded-lg border border-zinc-800 bg-zinc-950/60 p-2.5">
                 <div className="text-[10px] font-medium text-zinc-400">Privacidad</div>
-                <div className="mt-0.5 text-xs font-semibold text-white">100% Local / Offline</div>
+                <div className="mt-0.5 text-xs font-semibold text-white">100% en tu equipo</div>
               </div>
               <div className="rounded-lg border border-zinc-800 bg-zinc-950/60 p-2.5">
                 <div className="text-[10px] font-medium text-zinc-400">Idioma</div>
-                <div className="mt-0.5 text-xs font-semibold text-white">Español Nativo</div>
-              </div>
-              <div className="rounded-lg border border-zinc-800 bg-zinc-950/60 p-2.5">
-                <div className="text-[10px] font-medium text-zinc-400">Entendimiento</div>
-                <div className="mt-0.5 text-xs font-semibold text-white">Nombres y Fechas</div>
+                <div className="mt-0.5 text-xs font-semibold text-white">Español nativo</div>
               </div>
             </div>
           </Card>
@@ -395,7 +436,7 @@ export function SettingsPanel() {
       )}
 
       {/* TAB 3: APARIENCIA */}
-      {activeTab === "appearance" && (
+      {activeTab === "apariencia" && (
         <div className="space-y-4">
           {/* Card: Color principal */}
           <Card className="p-4 space-y-3">
@@ -449,7 +490,7 @@ export function SettingsPanel() {
             </div>
           </Card>
 
-          {/* Card: Efectos y Animaciones */}
+          {/* Card: Efectos y Animaciones con Switch Shadcn */}
           <Card className="p-4 space-y-3">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-start gap-2.5">
@@ -460,22 +501,22 @@ export function SettingsPanel() {
                   </div>
                   <p className="mt-0.5 text-[11px] text-zinc-400">
                     Desactiva el seguimiento del cursor y los parpadeos animados
-                    de la mascota Moo para una experiencia más sobria.
+                    de la mascota Moo para una experiencia visual estática.
                   </p>
                 </div>
               </div>
-              <SwitchToggle
+              <Switch
                 label="Reducir movimiento"
                 checked={preferences.reduceMotion}
-                onChange={(val) => updatePreference("reduceMotion", val)}
+                onCheckedChange={(val) => updatePreference("reduceMotion", val)}
               />
             </div>
           </Card>
         </div>
       )}
 
-      {/* TAB 4: ATAJOS Y SISTEMA */}
-      {activeTab === "system" && (
+      {/* TAB 4: ATAJOS */}
+      {activeTab === "atajos" && (
         <div className="space-y-4">
           {/* Card: Atajo Global de Teclado */}
           <Card className="p-4 space-y-3">
@@ -483,7 +524,7 @@ export function SettingsPanel() {
               <div className="space-y-0.5">
                 <div className="flex items-center gap-2 font-semibold text-white">
                   <Keyboard className="h-4 w-4 text-moo-accent" />
-                  <span>Atajo para desplegar o plegar el Notch</span>
+                  <span>Atajo global para abrir o cerrar el Notch</span>
                 </div>
                 <p className="text-[11px] text-zinc-400">
                   Haz clic en el recuadro para grabar una combinación o elige una
@@ -540,6 +581,31 @@ export function SettingsPanel() {
             </div>
           </Card>
 
+          {/* Card: Modo de Despliegue (Click vs Hover) */}
+          <Card className="p-4 space-y-3">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-start gap-2.5">
+                <MousePointer className="mt-0.5 h-4 w-4 shrink-0 text-moo-accent" />
+                <div>
+                  <div className="text-xs font-semibold text-white">
+                    Desplegar al pasar el ratón (Hover)
+                  </div>
+                  <p className="mt-0.5 text-[11px] text-zinc-400">
+                    Por defecto se abre con un clic para no estorbar al cambiar de
+                    pestaña en el navegador. Actívalo si prefieres abrirlo con solo pasar el cursor.
+                  </p>
+                </div>
+              </div>
+              <Switch
+                label="Desplegar con Hover"
+                checked={preferences.expandTrigger === "hover"}
+                onCheckedChange={(hover) =>
+                  updatePreference("expandTrigger", hover ? "hover" : "click")
+                }
+              />
+            </div>
+          </Card>
+
           {/* Card: Comportamiento de Ventana */}
           <Card className="p-4 space-y-3">
             <div className="flex items-center justify-between gap-3">
@@ -554,10 +620,10 @@ export function SettingsPanel() {
                   </p>
                 </div>
               </div>
-              <SwitchToggle
+              <Switch
                 label="Iniciar en modo Notch compacto"
                 checked={preferences.startInCompactMode}
-                onChange={(val) =>
+                onCheckedChange={(val) =>
                   updatePreference("startInCompactMode", val)
                 }
               />
@@ -575,10 +641,10 @@ export function SettingsPanel() {
                   </p>
                 </div>
               </div>
-              <SwitchToggle
+              <Switch
                 label="Recordar última posición de ventana"
                 checked={preferences.rememberWindowPosition}
-                onChange={(val) =>
+                onCheckedChange={(val) =>
                   updatePreference("rememberWindowPosition", val)
                 }
               />
@@ -610,7 +676,7 @@ export function SettingsPanel() {
                 backend/moo.sqlite
               </span>
               <span className="font-display text-xs text-white">
-                Moo Desk v0.2.0
+                Moo Desk v2.2
               </span>
             </div>
           </Card>
